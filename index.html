@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tech & Trend Studio | Dashboard</title>
+    <title>Tech & Trend Studio</title>
     <style>
         :root {
             --primary-blue: #284b99;
@@ -18,28 +18,88 @@
             background-color: var(--dark-bg);
             color: var(--light-text);
             margin: 0;
-            display: flex; /* Layout a due colonne */
-            min-height: 100vh;
+            overflow-x: hidden;
         }
 
-        /* Contenuto Principale (Sinistra) */
-        .main-content {
-            flex: 1;
-            padding: 30px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
+        /* Header con Logo e Scritta affiancati */
         header {
-            text-align: center;
-            width: 100%;
-            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            background: #232f3e;
+            border-bottom: 3px solid var(--primary-blue);
         }
 
         .logo-container img {
-            max-width: 120px;
-            border-radius: 10px;
+            max-width: 60px; /* Dimensione ridotta per stare di lato */
+            margin-right: 15px;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 1.5rem;
+            letter-spacing: 1px;
+        }
+
+        /* Pulsante per aprire il menu (schiacciato al lato) */
+        .menu-toggle {
+            position: fixed;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--primary-blue);
+            color: white;
+            padding: 15px 5px;
+            border-radius: 10px 0 0 10px;
+            cursor: pointer;
+            z-index: 1000;
+            writing-mode: vertical-rl;
+            font-weight: bold;
+            font-size: 12px;
+        }
+
+        /* Sidebar Mobile (A comparsa) */
+        .sidebar {
+            position: fixed;
+            right: -250px; /* Nascosta inizialmente */
+            top: 0;
+            width: 200px;
+            height: 100%;
+            background: var(--sidebar-bg);
+            transition: 0.3s;
+            display: flex;
+            flex-direction: column;
+            padding: 60px 20px;
+            gap: 15px;
+            z-index: 999;
+            border-left: 2px solid var(--accent-green);
+        }
+
+        .sidebar.open {
+            right: 0; /* Mostra menu */
+        }
+
+        .nav-button {
+            background: #37475a;
+            color: white;
+            padding: 15px;
+            text-decoration: none;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: bold;
+            border: 1px solid transparent;
+        }
+
+        .nav-button:hover {
+            border-color: var(--accent-green);
+        }
+
+        /* Contenuto Principale */
+        .main-content {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         .payment-info {
@@ -49,96 +109,54 @@
             border-radius: 10px;
             font-weight: bold;
             border-left: 8px solid #ff9900;
-            margin-bottom: 30px;
-            max-width: 600px;
+            margin: 20px 0;
+            max-width: 90%;
         }
 
-        .grid-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
+        .grid {
+            display: flex;
             gap: 20px;
-            width: 100%;
-            max-width: 800px;
+            flex-wrap: wrap;
+            justify-content: center;
         }
 
         .card {
             background: #252525;
-            padding: 25px;
+            padding: 20px;
             border-radius: 15px;
-            border: 1px solid #444;
+            width: 250px;
             text-align: center;
             text-decoration: none;
             color: white;
-            transition: 0.3s;
+            border: 1px solid #444;
         }
 
-        .card:hover {
-            border-color: var(--accent-green);
-            transform: translateY(-5px);
-        }
-
-        /* Menu Laterale (Destra) */
-        .sidebar {
-            width: 100px;
-            background-color: var(--sidebar-bg);
-            border-left: 3px solid var(--primary-blue);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding-top: 40px;
-            gap: 20px;
-        }
-
-        .nav-button {
-            width: 60px;
-            height: 60px;
-            background: #37475a;
-            border-radius: 12px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            text-decoration: none;
-            font-size: 0.7rem;
-            font-weight: bold;
-            border: 1px solid transparent;
-            transition: 0.3s;
-        }
-
-        .nav-button:hover {
-            border-color: var(--accent-green);
-            background: #485769;
-        }
-
-        .nav-button.active {
-            background: var(--accent-green);
-            color: var(--dark-bg);
-        }
-
-        .price {
-            display: block;
-            font-size: 1.2rem;
-            color: var(--accent-green);
-            margin-top: 10px;
-        }
+        .price { color: var(--accent-green); font-size: 1.2rem; display: block; margin-top: 10px; }
     </style>
 </head>
 <body>
 
-    <div class="main-content">
-        <header>
-            <div class="logo-container">
-                <img src="logo.png" alt="Logo Studio">
-            </div>
-            <h1>TECH & TREND</h1>
-        </header>
+    <header>
+        <div class="logo-container">
+            <img src="logo.png" alt="Logo">
+        </div>
+        <h1>TECH TREND</h1>
+    </header>
 
+    <div class="menu-toggle" onclick="toggleMenu()">MENU ◀</div>
+
+    <nav class="sidebar" id="sidebar">
+        <a href="index.html" class="nav-button">🏠 HOME</a>
+        <a href="tech.html" class="nav-button">💻 TECH</a>
+        <a href="trend.html" class="nav-button">🎬 TREND</a>
+    </nav>
+
+    <div class="main-content">
         <div class="payment-info">
-            La cosa sui pagamenti è identica a com'è ora: Codici Amazon/Google Play.
+            Accettiamo pagamenti rapidi tramite Codici Ricarica Amazon o Google Play.
         </div>
 
-        <div class="grid-container">
+        <div class="grid">
             <a href="tech.html" class="card">
                 <h3>TECH</h3>
                 <p>Coding e Automazioni</p>
@@ -152,20 +170,14 @@
         </div>
     </div>
 
-    <nav class="sidebar">
-        <a href="index.html" class="nav-button active">
-            <span>🏠</span>
-            HOME
-        </a>
-        <a href="tech.html" class="nav-button">
-            <span>💻</span>
-            TECH
-        </a>
-        <a href="trend.html" class="nav-button">
-            <span>🎬</span>
-            TREND
-        </a>
-    </nav>
+    <script>
+        function toggleMenu() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('open');
+            const btn = document.querySelector('.menu-toggle');
+            btn.innerHTML = sidebar.classList.contains('open') ? 'CHIUDI ▶' : 'MENU ◀';
+        }
+    </script>
 
 </body>
 </html>

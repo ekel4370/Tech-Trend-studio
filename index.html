@@ -8,40 +8,58 @@
         :root {
             --primary-blue: #284b99;
             --accent-green: #08d962;
-            --dark-bg: #1a1a1a;
+            --dark-bg: #0f0f0f;
             --sidebar-bg: #232f3e;
             --light-text: #f4f4f4;
         }
 
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Arial, sans-serif;
             background-color: var(--dark-bg);
             color: var(--light-text);
             margin: 0;
             overflow-x: hidden;
         }
 
-        /* Header con Logo e Scritta affiancati */
+        /* Header con Logo che taglia la fascia blu (Linee bianche del tuo schizzo) */
         header {
             display: flex;
             align-items: center;
-            padding: 20px;
-            background: #232f3e;
-            border-bottom: 3px solid var(--primary-blue);
+            height: 80px;
+            background: var(--sidebar-bg);
+            position: relative;
+            padding-left: 20px;
+            /* Smussatura interna come da disegno */
+            border-bottom-right-radius: 40px; 
+            border-bottom: 2px solid var(--primary-blue);
+            width: fit-content;
+            padding-right: 40px;
         }
 
-        .logo-container img {
-            max-width: 60px; /* Dimensione ridotta per stare di lato */
-            margin-right: 15px;
+        .logo-box {
+            background: white;
+            padding: 8px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            z-index: 10;
+        }
+
+        .logo-box img {
+            max-width: 50px;
+            height: auto;
         }
 
         header h1 {
-            margin: 0;
-            font-size: 1.5rem;
-            letter-spacing: 1px;
+            margin-left: 20px;
+            font-size: 1.4rem;
+            letter-spacing: 2px;
+            color: white;
         }
 
-        /* Pulsante per aprire il menu (schiacciato al lato) */
+        /* Pulsante Apertura Menu (Schiacciato al lato) */
         .menu-toggle {
             position: fixed;
             right: 0;
@@ -49,123 +67,145 @@
             transform: translateY(-50%);
             background: var(--primary-blue);
             color: white;
-            padding: 15px 5px;
-            border-radius: 10px 0 0 10px;
+            padding: 20px 8px;
+            border-radius: 20px 0 0 20px;
             cursor: pointer;
-            z-index: 1000;
+            z-index: 1001;
             writing-mode: vertical-rl;
+            font-size: 11px;
             font-weight: bold;
-            font-size: 12px;
+            box-shadow: -2px 0 10px rgba(0,0,0,0.5);
+            transition: 0.3s;
         }
 
-        /* Sidebar Mobile (A comparsa) */
+        /* Sidebar con Bordi Smussati (Seguendo la tua linea bianca) */
         .sidebar {
             position: fixed;
-            right: -250px; /* Nascosta inizialmente */
-            top: 0;
-            width: 200px;
-            height: 100%;
+            right: -280px;
+            top: 5%;
+            height: 90%;
+            width: 240px;
             background: var(--sidebar-bg);
-            transition: 0.3s;
+            border-radius: 40px 0 0 40px; /* Smussatura larga come da schizzo */
+            border: 2px solid var(--accent-green);
+            border-right: none;
+            transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
             display: flex;
             flex-direction: column;
-            padding: 60px 20px;
-            gap: 15px;
-            z-index: 999;
-            border-left: 2px solid var(--accent-green);
+            padding: 40px 20px;
+            gap: 12px;
+            z-index: 1000;
+            box-shadow: -10px 0 30px rgba(0,0,0,0.5);
         }
 
         .sidebar.open {
-            right: 0; /* Mostra menu */
+            right: 0;
         }
 
         .nav-button {
             background: #37475a;
             color: white;
-            padding: 15px;
+            padding: 14px;
             text-decoration: none;
-            border-radius: 8px;
-            text-align: center;
+            border-radius: 12px;
             font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: 0.3s;
             border: 1px solid transparent;
         }
 
         .nav-button:hover {
             border-color: var(--accent-green);
+            background: #485a70;
         }
 
-        /* Contenuto Principale */
+        /* Contenuto principale */
         .main-content {
-            padding: 20px;
+            padding: 40px 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
         }
 
-        .payment-info {
-            background: #fff;
-            color: #000;
-            padding: 15px;
-            border-radius: 10px;
+        .payment-banner {
+            background: white;
+            color: black;
+            padding: 15px 25px;
+            border-radius: 15px;
             font-weight: bold;
-            border-left: 8px solid #ff9900;
-            margin: 20px 0;
-            max-width: 90%;
+            border-left: 10px solid #ff9900;
+            margin-bottom: 40px;
+            text-align: center;
+            max-width: 80%;
         }
 
-        .grid {
+        .card-container {
             display: flex;
-            gap: 20px;
+            gap: 25px;
             flex-wrap: wrap;
             justify-content: center;
         }
 
         .card {
-            background: #252525;
-            padding: 20px;
-            border-radius: 15px;
-            width: 250px;
+            background: #1e1e1e;
+            padding: 30px;
+            border-radius: 20px;
+            width: 260px;
             text-align: center;
             text-decoration: none;
             color: white;
-            border: 1px solid #444;
+            border: 1px solid #333;
+            transition: 0.3s;
         }
 
-        .price { color: var(--accent-green); font-size: 1.2rem; display: block; margin-top: 10px; }
+        .card:hover {
+            border-color: var(--accent-green);
+            transform: translateY(-10px);
+        }
+
+        .card h3 { color: white; margin-bottom: 10px; }
+        .price-tag { color: var(--accent-green); font-size: 1.4rem; font-weight: bold; }
+
     </style>
 </head>
 <body>
 
     <header>
-        <div class="logo-container">
+        <div class="logo-box">
             <img src="logo.png" alt="Logo">
         </div>
         <h1>TECH TREND</h1>
     </header>
 
-    <div class="menu-toggle" onclick="toggleMenu()">MENU ◀</div>
+    <div class="menu-toggle" onclick="toggleMenu()" id="toggleBtn">MENU ◀</div>
 
     <nav class="sidebar" id="sidebar">
+        <h3 style="text-align:center; color:var(--accent-green);">NAVIGAZIONE</h3>
         <a href="index.html" class="nav-button">🏠 HOME</a>
-        <a href="tech.html" class="nav-button">💻 TECH</a>
-        <a href="trend.html" class="nav-button">🎬 TREND</a>
+        <a href="tech.html" class="nav-button">💻 TECH SIDE</a>
+        <a href="trend.html" class="nav-button">🎬 TREND SIDE</a>
+        <hr style="border: 0.5px solid #444; width: 100%;">
+        <a href="carrello.html" class="nav-button">🛒 CARRELLO</a>
+        <a href="faq.html" class="nav-button">❓ DOMANDE (FAQ)</a>
     </nav>
 
     <div class="main-content">
-        <div class="payment-info">
+        <div class="payment-banner">
             Accettiamo pagamenti rapidi tramite Codici Ricarica Amazon o Google Play.
         </div>
 
-        <div class="grid">
+        <div class="card-container">
             <a href="tech.html" class="card">
                 <h3>TECH</h3>
-                <p>Coding e Automazioni</p>
-                <span class="price">da €5</span>
+                <p>Script Python e Web Dev</p>
+                <div class="price-tag">da €5</div>
             </a>
             <a href="trend.html" class="card">
                 <h3>TREND</h3>
-                <p>Video e Social Design</p>
-                <span class="price">da €10</span>
+                <p>Video B-Roll e Grafiche</p>
+                <div class="price-tag">da €10</div>
             </a>
         </div>
     </div>
@@ -173,9 +213,16 @@
     <script>
         function toggleMenu() {
             const sidebar = document.getElementById('sidebar');
+            const btn = document.getElementById('toggleBtn');
             sidebar.classList.toggle('open');
-            const btn = document.querySelector('.menu-toggle');
-            btn.innerHTML = sidebar.classList.contains('open') ? 'CHIUDI ▶' : 'MENU ◀';
+            
+            if(sidebar.classList.contains('open')) {
+                btn.innerHTML = 'CHIUDI ▶';
+                btn.style.right = '240px'; // Si sposta insieme al menu
+            } else {
+                btn.innerHTML = 'MENU ◀';
+                btn.style.right = '0';
+            }
         }
     </script>
 

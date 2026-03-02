@@ -3,109 +3,169 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tech & Trend Studio | Amazon Style Store</title>
+    <title>Tech & Trend Studio | Dashboard</title>
     <style>
         :root {
             --primary-blue: #284b99;
             --accent-green: #08d962;
             --dark-bg: #1a1a1a;
+            --sidebar-bg: #232f3e;
             --light-text: #f4f4f4;
         }
+
         body {
             font-family: Arial, sans-serif;
             background-color: var(--dark-bg);
             color: var(--light-text);
             margin: 0;
+            display: flex; /* Layout a due colonne */
+            min-height: 100vh;
+        }
+
+        /* Contenuto Principale (Sinistra) */
+        .main-content {
+            flex: 1;
+            padding: 30px;
             display: flex;
             flex-direction: column;
             align-items: center;
         }
+
         header {
-            padding: 30px;
             text-align: center;
             width: 100%;
-            background: #232f3e; /* Colore scuro stile Amazon */
-            border-bottom: 4px solid var(--accent-green);
+            margin-bottom: 30px;
         }
+
         .logo-container img {
-            max-width: 150px;
+            max-width: 120px;
+            border-radius: 10px;
         }
+
         .payment-info {
             background: #fff;
             color: #000;
-            padding: 10px 20px;
-            margin: 20px;
-            border-radius: 5px;
+            padding: 15px;
+            border-radius: 10px;
             font-weight: bold;
-            border-left: 5px solid #ff9900; /* Arancione Amazon per i pagamenti */
+            border-left: 8px solid #ff9900;
+            margin-bottom: 30px;
+            max-width: 600px;
         }
-        .services {
-            display: flex;
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
             gap: 20px;
-            padding: 20px;
-            flex-wrap: wrap;
-            justify-content: center;
+            width: 100%;
+            max-width: 800px;
         }
+
         .card {
             background: #252525;
-            padding: 20px;
-            border-radius: 8px;
-            width: 280px;
+            padding: 25px;
+            border-radius: 15px;
             border: 1px solid #444;
-            transition: 0.3s;
             text-align: center;
             text-decoration: none;
             color: white;
+            transition: 0.3s;
         }
+
         .card:hover {
             border-color: var(--accent-green);
-            transform: scale(1.02);
+            transform: translateY(-5px);
         }
-        .price {
-            font-size: 1.5rem;
-            color: var(--accent-green);
-            display: block;
-            margin: 10px 0;
+
+        /* Menu Laterale (Destra) */
+        .sidebar {
+            width: 100px;
+            background-color: var(--sidebar-bg);
+            border-left: 3px solid var(--primary-blue);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 40px;
+            gap: 20px;
         }
-        .btn-view {
-            background: #febd69;
-            color: #111;
-            padding: 8px 15px;
-            border-radius: 5px;
-            display: inline-block;
-            margin-top: 10px;
+
+        .nav-button {
+            width: 60px;
+            height: 60px;
+            background: #37475a;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            font-size: 0.7rem;
             font-weight: bold;
+            border: 1px solid transparent;
+            transition: 0.3s;
+        }
+
+        .nav-button:hover {
+            border-color: var(--accent-green);
+            background: #485769;
+        }
+
+        .nav-button.active {
+            background: var(--accent-green);
+            color: var(--dark-bg);
+        }
+
+        .price {
+            display: block;
+            font-size: 1.2rem;
+            color: var(--accent-green);
+            margin-top: 10px;
         }
     </style>
 </head>
 <body>
 
-    <header>
-        <div class="logo-container">
-            <img src="logo.png" alt="Logo">
+    <div class="main-content">
+        <header>
+            <div class="logo-container">
+                <img src="logo.png" alt="Logo Studio">
+            </div>
+            <h1>TECH & TREND</h1>
+        </header>
+
+        <div class="payment-info">
+            La cosa sui pagamenti è identica a com'è ora: Codici Amazon/Google Play.
         </div>
-        <h1 style="color: white; margin: 10px 0;">TECH & TREND STUDIO</h1>
-    </header>
 
-    <div class="payment-info">
-        ⚠️ Accettiamo pagamenti rapidi tramite Codici Ricarica Amazon o Google Play.
+        <div class="grid-container">
+            <a href="tech.html" class="card">
+                <h3>TECH</h3>
+                <p>Coding e Automazioni</p>
+                <span class="price">da €5</span>
+            </a>
+            <a href="trend.html" class="card">
+                <h3>TREND</h3>
+                <p>Video e Social Design</p>
+                <span class="price">da €10</span>
+            </a>
+        </div>
     </div>
 
-    <div class="services">
-        <a href="tech.html" class="card">
-            <h3>Tech Side</h3>
-            <p>Sorgenti Python, script HTML/CSS e automazioni.</p>
-            <span class="price">da €5,00</span>
-            <span class="btn-view">Vedi Articoli</span>
+    <nav class="sidebar">
+        <a href="index.html" class="nav-button active">
+            <span>🏠</span>
+            HOME
         </a>
-
-        <a href="trend.html" class="card">
-            <h3>Trend Side</h3>
-            <p>Editing video B-Roll e grafiche social di tendenza.</p>
-            <span class="price">da €10,00</span>
-            <span class="btn-view">Vedi Articoli</span>
+        <a href="tech.html" class="nav-button">
+            <span>💻</span>
+            TECH
         </a>
-    </div>
+        <a href="trend.html" class="nav-button">
+            <span>🎬</span>
+            TREND
+        </a>
+    </nav>
 
 </body>
 </html>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TechTrend</title>
+    <title>Tech & Trend Studio</title>
     <style>
         :root {
             --primary-blue: #284b99;
@@ -20,10 +20,16 @@
             color: var(--light-text);
             margin: 0;
             overflow-x: hidden;
-            display: flex; /* Layout principale */
+            display: flex;
+            transition: filter 0.4s ease; /* Per l'effetto blur dello sfondo */
         }
 
-        /* --- Header (Logo e Titolo) --- */
+        /* Classe per sfocare tutto il contenuto sotto l'overlay */
+        .blur-effect {
+            filter: blur(8px);
+        }
+
+        /* --- Header --- */
         header {
             display: flex;
             align-items: center;
@@ -34,7 +40,7 @@
             border-bottom: 2px solid var(--primary-blue);
             width: fit-content;
             padding-right: 40px;
-            position: fixed; /* Header fisso in alto */
+            position: fixed;
             top: 0;
             left: 0;
             z-index: 100;
@@ -108,10 +114,10 @@
 
         .nav-button:hover { border-color: var(--accent-green); background: #485a70; }
 
-        /* --- Contenuto Principale (Layout a Griglia) --- */
-        .main-content {
+        /* --- Contenuto Principale --- */
+        #mainContent {
             flex: 1;
-            padding: 110px 20px 40px 20px; /* Spazio per header fisso */
+            padding: 110px 20px 40px 20px;
             display: grid;
             grid-template-areas: 
                 "info info"
@@ -120,9 +126,9 @@
             grid-gap: 20px;
             max-width: 1200px;
             margin: 0 auto;
+            transition: filter 0.4s ease;
         }
 
-        /* Banner Info Pagamenti (Sempre a schermo) */
         .payment-banner {
             grid-area: info;
             background: white;
@@ -145,7 +151,6 @@
             font-weight: bold;
         }
 
-        /* Card Tech e Trend */
         .card {
             background: #1e1e1e;
             padding: 30px;
@@ -160,37 +165,29 @@
             justify-content: space-between;
         }
 
-        .card:hover {
-            border-color: var(--accent-green);
-            transform: translateY(-5px);
-        }
-
         .card.tech { grid-area: tech; border-top: 5px solid #00a8e8; }
         .card.trend { grid-area: trend; border-top: 5px solid #3adb76; }
 
-        .card h2 { margin-top: 0; font-size: 1.5rem; }
-        .card p { font-size: 0.9rem; color: #ccc; flex-grow: 1; }
         .price-tag { color: var(--accent-green); font-size: 1.4rem; font-weight: bold; margin-top: 15px; }
 
-        /* --- Overlay Pagamenti (Tutto a schermo con filtro nero) --- */
+        /* --- Overlay con Animazione Slide-Up e Blur --- */
         .overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.85); /* Filtro nero di sfondo */
-            display: none; /* Nascosto inizialmente */
+            background-color: rgba(0, 0, 0, 0); 
+            display: none; 
             justify-content: center;
             align-items: center;
-            z-index: 2000; /* Sopra a tutto */
-            opacity: 0;
-            transition: opacity 0.3s ease;
+            z-index: 2000;
+            transition: background-color 0.4s ease;
         }
 
         .overlay.show {
             display: flex;
-            opacity: 1;
+            background-color: rgba(0, 0, 0, 0.7); /* Oscuramento graduale */
         }
 
         .overlay-content {
@@ -202,7 +199,15 @@
             width: 90%;
             position: relative;
             border-left: 15px solid var(--payment-orange);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.8);
+            
+            /* Animazione slide dal basso */
+            transform: translateY(100vh); 
+            transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .overlay.show .overlay-content {
+            transform: translateY(0);
         }
 
         .close-overlay {
@@ -223,46 +228,46 @@
 </head>
 <body>
 
-    <header>
-        <div class="logo-box"><img src="logo.png" alt="Logo"></div>
-        <h1>TECH TREND</h1>
-    </header>
+    <div id="pageWrapper" style="width: 100%; transition: filter 0.4s ease;">
+        <header>
+            <div class="logo-box"><img src="logo.png" alt="Logo"></div>
+            <h1>TECH TREND</h1>
+        </header>
 
-    <div class="menu-toggle" onclick="toggleMenu()" id="toggleBtn">MENU ◀</div>
+        <div class="menu-toggle" onclick="toggleMenu()" id="toggleBtn">MENU ◀</div>
 
-    <nav class="sidebar" id="sidebar">
-        <h3 style="text-align:center; color:var(--accent-green);">NAVIGAZIONE</h3>
-        <a href="index.html" class="nav-button">HOME</a>
-        <a href="carrello.html" class="nav-button">🛒 CARRELLO</a>
-        <a href="faq.html" class="nav-button">❓ DOMANDE (FAQ)</a>
-    </nav>
+        <nav class="sidebar" id="sidebar">
+            <h3 style="text-align:center; color:var(--accent-green);">NAVIGAZIONE</h3>
+            <a href="index.html" class="nav-button">HOME</a>
+            <a href="carrello.html" class="nav-button">🛒 CARRELLO</a>
+            <a href="faq.html" class="nav-button">❓ DOMANDE (FAQ)</a>
+        </nav>
 
-    <main class="main-content">
-        
-        <div class="payment-banner">
-            <span>Accettiamo pagamenti rapidi tramite Codici Ricarica Amazon o Google Play.</span>
-            <span class="more-link" onclick="openOverlay()">di più</span>
-        </div>
-
-        <a href="tech.html" class="card tech">
-            <div>
-                <h2>TECH</h2>
-                <p>Script Python, automazioni web e sviluppo di bot personalizzati per le tue esigenze.</p>
+        <main class="main-content" id="mainContent">
+            <div class="payment-banner">
+                <span>Accettiamo pagamenti rapidi tramite Codici Ricarica Amazon o Google Play.</span>
+                <span class="more-link" onclick="openOverlay()">di più</span>
             </div>
-            <div class="price-tag">da €5</div>
-        </a>
 
-        <a href="trend.html" class="card trend">
-            <div>
-                <h2>TREND</h2>
-                <p>Editing video professionale per social (B-Roll), grafiche di tendenza e poster estetici.</p>
-            </div>
-            <div class="price-tag">da €10</div>
-        </a>
+            <a href="tech.html" class="card tech">
+                <div>
+                    <h2>TECH</h2>
+                    <p>Script Python, automazioni web e sviluppo di bot personalizzati.</p>
+                </div>
+                <div class="price-tag">da €5</div>
+            </a>
 
-    </main>
+            <a href="trend.html" class="card trend">
+                <div>
+                    <h2>TREND</h2>
+                    <p>Editing video professionale per social, grafiche e poster estetici.</p>
+                </div>
+                <div class="price-tag">da €10</div>
+            </a>
+        </main>
+    </div>
 
-    <div class="overlay" id="paymentOverlay">
+    <div class="overlay" id="paymentOverlay" onclick="closeOverlayIfOutside(event)">
         <div class="overlay-content">
             <span class="close-overlay" onclick="closeOverlay()">&times;</span>
             <h2>Perché questo metodo?</h2>
@@ -270,14 +275,13 @@
             <ul>
                 <li><strong>Immediati:</strong> Il pagamento è istantaneo, permettendoci di iniziare subito il lavoro.</li>
                 <li><strong>Sicuri:</strong> Non richiedono la condivisione di dati bancari o carte di credito.</li>
-                <li><strong>Privati:</strong> Garantiscono la massima privacy sia per te che per il nostro team.</li>
+                <li><strong>Privati:</strong> Garantiscono la massima privacy sia per te che per noi.</li>
             </ul>
             <p><strong>Vantaggi:</strong> Attivazione rapida del servizio e nessuna commissione aggiuntiva.</p>
         </div>
     </div>
 
     <script>
-        // Funzione per il Menu a Scomparsa (Invariata)
         function toggleMenu() {
             const sidebar = document.getElementById('sidebar');
             const btn = document.getElementById('toggleBtn');
@@ -291,21 +295,31 @@
             }
         }
 
-        // Funzioni per l'Overlay a tutto schermo
         function openOverlay() {
-            document.getElementById('paymentOverlay').classList.add('show');
-            document.body.style.overflow = 'hidden'; // Impedisce lo scroll della pagina sotto
+            const overlay = document.getElementById('paymentOverlay');
+            const wrapper = document.getElementById('pageWrapper');
+            overlay.style.display = 'flex';
+            setTimeout(() => {
+                overlay.classList.add('show');
+                wrapper.classList.add('blur-effect'); // Aggiunge il blur allo sfondo
+            }, 10);
+            document.body.style.overflow = 'hidden';
         }
 
         function closeOverlay() {
-            document.getElementById('paymentOverlay').classList.remove('show');
-            document.body.style.overflow = ''; // Riabilita lo scroll
+            const overlay = document.getElementById('paymentOverlay');
+            const wrapper = document.getElementById('pageWrapper');
+            overlay.classList.remove('show');
+            wrapper.classList.remove('blur-effect'); // Rimuove il blur
+            setTimeout(() => {
+                overlay.style.display = 'none';
+            }, 500);
+            document.body.style.overflow = '';
         }
 
-        // Chiude l'overlay cliccando fuori dal contenuto bianco
-        window.onclick = function(event) {
+        function closeOverlayIfOutside(event) {
             const overlay = document.getElementById('paymentOverlay');
-            if (event.target == overlay) {
+            if (event.target === overlay) {
                 closeOverlay();
             }
         }

@@ -65,7 +65,7 @@
             color: white;
         }
 
-        /* --- Barra di Navigazione Inferiore con Animazione --- */
+        /* --- Barra di Navigazione Inferiore con SCORRIMENTO FLUIDO --- */
         .bottom-nav {
             position: fixed;
             bottom: 30px;
@@ -80,6 +80,18 @@
             border: 1px solid #444;
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
             z-index: 1000;
+            /* Necessario per il posizionamento della pillola */
+            position: relative; 
+        }
+
+        /* L'elemento "Pillola" bianca che SCORRE */
+        .nav-pill {
+            position: absolute;
+            background: #f4f4f4;
+            border-radius: 12px;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55); /* Effetto scorrimento fluido e molleggio */
+            z-index: -1; /* Sta sotto il testo */
+            box-shadow: 0 2px 10px rgba(255,255,255,0.2);
         }
 
         .nav-item {
@@ -89,30 +101,31 @@
             border-radius: 12px;
             font-size: 0.85rem;
             font-weight: 600;
-            transition: all 0.3s ease; /* Transizione per lo spostamento del colore */
+            transition: color 0.3s ease;
             cursor: pointer;
+            position: relative; /* Per stare sopra la pillola */
+            z-index: 1;
         }
 
         .nav-item:hover { color: white; }
         
-        /* La "pillola" bianca */
+        /* Quando un item è attivo, cambiamo solo il colore del testo */
         .nav-item.active { 
-            background: #f4f4f4; 
             color: #000; 
         }
 
-        .nav-divider { width: 1px; height: 25px; background: #444; margin: 0 5px; }
+        .nav-divider { width: 1px; height: 25px; background: #444; margin: 0 5px; z-index: 1; }
 
-        /* --- Struttura --- */
+        /* --- Struttura Single Page (Invariata) --- */
         main {
-            padding: 110px 20px 100px 20px;
+            padding: 110px 20px 150px 20px; /* Più spazio sotto per non coprire l'ultima sezione */
             max-width: 1200px;
             margin: 0 auto;
         }
 
         .section-container {
             margin-bottom: 60px;
-            scroll-margin-top: 120px; /* Offset per l'header fisso */
+            scroll-margin-top: 120px;
         }
 
         .payment-banner {
@@ -155,7 +168,7 @@
         .item p { font-size: 0.9rem; color: #ccc; }
         .item .price { font-weight: bold; color: white; margin-top: 10px; display: block; }
 
-        /* Overlay */
+        /* --- Overlay (Invariato) --- */
         .overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background-color: rgba(0, 0, 0, 0); display: none; 
@@ -181,15 +194,19 @@
             <h1>TECH TREND</h1>
         </header>
 
-        <nav class="bottom-nav">
-            <a href="#" class="nav-item active" id="nav-home">Home</a>
-            <div class="nav-divider"></div>
-            <a href="#tech-section" class="nav-item" id="nav-tech">Tech Side</a>
-            <a href="#trend-section" class="nav-item" id="nav-trend">Trend Side</a>
-            <div class="nav-divider"></div>
-            <a href="carrello.html" class="nav-item">Carrello</a>
-            <a href="faq.html" class="nav-item">FAQ</a>
-        </nav>
+        <div style="position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); z-index: 1000;">
+            <nav class="bottom-nav" id="bottomNav">
+                <div class="nav-pill" id="navPill"></div>
+
+                <a href="#" class="nav-item active" id="nav-home">Home</a>
+                <div class="nav-divider"></div>
+                <a href="#tech-section" class="nav-item" id="nav-tech">Tech Side</a>
+                <a href="#trend-section" class="nav-item" id="nav-trend">Trend Side</a>
+                <div class="nav-divider"></div>
+                <a href="carrello.html" class="nav-item">Carrello</a>
+                <a href="faq.html" class="nav-item">FAQ</a>
+            </nav>
+        </div>
 
         <main id="top">
             <div class="payment-banner">
@@ -203,13 +220,8 @@
                     <div class="article-list">
                         <div class="item">
                             <h3>Script Python</h3>
-                            <p>Automazioni personalizzate per gestire dati.</p>
+                            <p>Automazioni personalizzate.</p>
                             <span class="price">da €5,00</span>
-                        </div>
-                        <div class="item">
-                            <h3>Web Bot</h3>
-                            <p>Bot per monitoraggio siti web.</p>
-                            <span class="price">da €15,00</span>
                         </div>
                     </div>
                 </div>
@@ -221,13 +233,8 @@
                     <div class="article-list">
                         <div class="item">
                             <h3>Video B-Roll</h3>
-                            <p>Editing cinematografico per Reel e TikTok.</p>
+                            <p>Editing cinematografico.</p>
                             <span class="price">da €10,00</span>
-                        </div>
-                        <div class="item">
-                            <h3>Poster Estetici</h3>
-                            <p>Grafiche digitali minimaliste.</p>
-                            <span class="price">da €15,00</span>
                         </div>
                     </div>
                 </div>
@@ -238,43 +245,70 @@
     <div class="overlay" id="paymentOverlay" onclick="closeOverlayIfOutside(event)">
         <div class="overlay-content">
             <span class="close-overlay" onclick="closeOverlay()">&times;</span>
-            <h2>Metodo di Pagamento</h2>
-            <ul>
-                <li><strong>Immediati:</strong> Iniziamo subito.</li>
-                <li><strong>Sicuri:</strong> No dati bancari.</li>
-                <li><strong>Privati:</strong> Massima privacy.</li>
-            </ul>
+            <h2>Pagamenti</h2>
+            <p>Sicuri, rapidi e privati.</p>
         </div>
     </div>
 
     <script>
-        // Funzione per gestire il cambio di stato attivo nel menu mentre si scende (ScrollSpy)
+        // --- SCRIPT PER LO SCORRIMENTO FLUIDO DELLA PILLOLA ---
+        const navPill = document.getElementById('navPill');
+        const navItems = document.querySelectorAll('.nav-item');
         const sections = document.querySelectorAll('.section-container');
-        const navItems = {
-            'tech-section': document.getElementById('nav-tech'),
-            'trend-section': document.getElementById('nav-trend'),
-            'home': document.getElementById('nav-home')
+
+        // Mappa ID sezione -> ID tasto nav
+        const sectionNavMap = {
+            'tech-section': 'nav-tech',
+            'trend-section': 'nav-trend',
+            'home': 'nav-home'
         };
 
-        window.addEventListener('scroll', () => {
-            let current = 'home';
+        // Funzione che sposta FISICAMENTE la pillola bianca
+        function movePillTo(targetItem) {
+            if (!targetItem) return;
             
-            // Controlliamo quale sezione è al centro dello schermo
+            // Calcoliamo posizione e dimensioni del tasto target
+            const rect = targetItem.getBoundingClientRect();
+            const navRect = document.getElementById('bottomNav').getBoundingClientRect();
+
+            // Spostiamo la pillola
+            navPill.style.width = `${rect.width}px`;
+            navPill.style.height = `${rect.height}px`;
+            navPill.style.left = `${rect.left - navRect.left}px`;
+            navPill.style.top = `${rect.top - navRect.top}px`;
+        }
+
+        // 1. Aggiorna la pillola all'avvio sulla Home
+        window.addEventListener('load', () => {
+            movePillTo(document.getElementById('nav-home'));
+        });
+
+        // 2. ScrollSpy: Rileva la posizione e fa SCORRERE la pillola
+        window.addEventListener('scroll', () => {
+            let currentSectionId = 'home';
+            
+            // Trova la sezione visibile
             sections.forEach(section => {
                 const sectionTop = section.offsetTop;
                 if (pageYOffset >= sectionTop - 150) {
-                    current = section.getAttribute('id');
+                    currentSectionId = section.getAttribute('id');
                 }
             });
 
-            // Rimuoviamo la classe active da tutti e la mettiamo a quello corrente
-            Object.values(navItems).forEach(item => item.classList.remove('active'));
-            if (navItems[current]) {
-                navItems[current].classList.add('active');
+            const activeNavItemId = sectionNavMap[currentSectionId];
+            const activeNavItem = document.getElementById(activeNavItemId);
+
+            // Rimuove active da tutti, aggiunge al corrente (per il colore del testo)
+            navItems.forEach(item => item.classList.remove('active'));
+            if (activeNavItem) {
+                activeNavItem.classList.add('active');
+                // Fa scivolare la pillola sul nuovo tasto attivo
+                movePillTo(activeNavItem);
             }
         });
 
-        // Funzioni Overlay
+
+        // --- Funzioni Overlay (Invariate) ---
         function openOverlay() {
             const overlay = document.getElementById('paymentOverlay');
             overlay.style.display = 'flex';

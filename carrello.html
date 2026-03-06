@@ -84,3 +84,52 @@
             color: black;
             border: none;
             padding: 15px 4
+padding: 15px 40px;
+            border-radius: 50px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: transform 0.2s;
+        }
+
+        .checkout-btn:hover {
+            transform: scale(1.05);
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px;
+            color: #555;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="tech.html" class="nav-link">Tech</a>
+            <a href="trend.html" class="nav-link">Trend</a>
+            <a href="carrello.html" class="nav-link active">Carrello</a>
+            <a href="FAQ.html" class="nav-link">FAQ</a>
+            <div class="pill"></div>
+        </div>
+    </nav>
+
+    <main class="cart-section">
+        <h1>Il tuo Carrello</h1>
+        <div id="cart-list">
+            <p style="color: #888;">Il tuo carrello è attualmente vuoto.</p>
+        </div>
+        <hr style="border: 0; border-top: 1px solid #333; margin: 20px 0;">
+        <h3>Totale: € <span id="total-price">0.00</span></h3>
+        <button class="checkout-btn">Procedi al Pagamento</button>
+    </main>
+
+    <footer>
+        <p>© 2026 TechTrend. Creato per il progetto scolastico.</p>
+    </footer>
+
+</body>
+</html>

@@ -5,96 +5,48 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tech & Trend Studio - Carrello</title>
     <style>
-        :root {
-            --primary-blue: #284b99;
-            --accent-green: #08d962;
-            --dark-bg: #0f0f0f;
-            --sidebar-bg: #232f3e;
-            --light-text: #f4f4f4;
-            --payment-orange: #ff9900;
-            --nav-bg: rgba(30, 30, 30, 0.95);
-        }
-
-        body {
-            font-family: 'Segoe UI', Arial, sans-serif;
-            background-color: var(--dark-bg);
-            color: var(--light-text);
-            margin: 0;
-            overflow-x: hidden;
-        }
-
-        /* --- Header --- */
-        header {
-            display: flex;
-            align-items: center;
-            height: 70px;
-            background: var(--sidebar-bg);
-            padding-left: 20px;
-            border-bottom-right-radius: 40px; 
-            border-bottom: 2px solid var(--primary-blue);
-            width: fit-content;
-            padding-right: 40px;
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: 100;
-        }
-
+        :root { --p-blue: #284b99; --dark: #0f0f0f; --s-bg: #232f3e; --text: #f4f4f4; --orange: #ff9900; --nav: rgba(30, 30, 30, 0.95); }
+        body { font-family: 'Segoe UI', sans-serif; background-color: var(--dark); color: var(--text); margin: 0; }
+        header { display: flex; align-items: center; height: 70px; background: var(--s-bg); padding: 0 40px 0 20px; border-bottom: 2px solid var(--p-blue); border-bottom-right-radius: 40px; position: fixed; top: 0; left: 0; z-index: 100; }
         .logo-box { background: white; padding: 5px; border-radius: 12px; display: flex; align-items: center; }
         .logo-box img { max-width: 45px; }
-        header h1 { margin-left: 15px; font-size: 1.2rem; letter-spacing: 2px; color: white; margin: 0; }
-
-        /* --- Barra di Navigazione (Pillola) --- */
-        .nav-container {
-            position: fixed;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 1000;
-        }
-
-        .bottom-nav {
-            background: var(--nav-bg);
-            padding: 8px;
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            border: 1px solid #444;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            position: relative;
-        }
-
-        .nav-pill {
-            position: absolute;
-            background: #f4f4f4;
-            border-radius: 12px;
-            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
-            z-index: 0;
-        }
-
-        .nav-item {
-            color: #999;
-            text-decoration: none;
-            padding: 10px 20px;
-            border-radius: 12px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            transition: color 0.3s ease;
-            cursor: pointer;
-            position: relative;
-            z-index: 1;
-        }
-
-        .nav-item.active { color: #000; }
-        .nav-divider { width: 1px; height: 25px; background: #444; margin: 0 5px; z-index: 1; }
-
-        /* --- Sezione Carrello --- */
-        main {
-            padding: 150px 20px 50px 20px;
-            max-width: 800px;
-            margin: 0 auto;
-            text-align: center;
-        }
-
-        .cart
+        header h1 { margin-left: 15px; font-size: 1.2rem; letter-spacing: 2px; color: white; }
+        .nav-container { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); z-index: 1000; }
+        .bottom-nav { background: var(--nav); padding: 8px; border-radius: 20px; display: flex; align-items: center; gap: 5px; border: 1px solid #444; position: relative; }
+        .nav-pill { position: absolute; background: white; border-radius: 12px; transition: all 0.4s; z-index: 0; height: 35px; width: 90px; left: 245px; }
+        .nav-item { color: #999; text-decoration: none; padding: 10px 20px; font-size: 0.85rem; font-weight: 600; position: relative; z-index: 1; }
+        .nav-item.active { color: black; }
+        main { padding: 150px 20px; max-width: 800px; margin: 0 auto; text-align: center; }
+        .cart-card { background: #1e1e1e; padding: 40px; border-radius: 30px; border-top: 8px solid var(--orange); }
+        .checkout-btn { background: white; color: black; border: none; padding: 15px 40px; border-radius: 50px; font-weight: bold; cursor: pointer; margin-top: 30px; }
+        .site-footer { text-align: center; padding: 40px; border-top: 1px solid #222; margin-bottom: 100px; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo-box"><img src="logo.png" alt="Logo"></div>
+        <h1>TECH TREND</h1>
+    </header>
+    <div class="nav-container">
+        <nav class="bottom-nav">
+            <div class="nav-pill"></div>
+            <a href="index.html" class="nav-item">Home</a>
+            <a href="index.html#tech-section" class="nav-item">Tech</a>
+            <a href="index.html#trend-section" class="nav-item">Trend</a>
+            <a href="carrello.html" class="nav-item active">Carrello</a>
+            <a href="faq.html" class="nav-item">FAQ</a>
+        </nav>
+    </div>
+    <main>
+        <div class="cart-card">
+            <h2>IL TUO CARRELLO</h2>
+            <p style="color: #666;">Il carrello è vuoto.</p>
+            <h3>TOTALE: € 0,00</h3>
+            <button class="checkout-btn" onclick="window.location.href='pagamento.html'">PROCEDI AL PAGAMENTO</button>
+        </div>
+    </main>
+    <footer class="site-footer">
+        <p>&copy; 2026 TECH & TREND STUDIO. TUTTI I DIRITTI RISERVATI.</p>
+    </footer>
+</body>
+</html>

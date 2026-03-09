@@ -7,15 +7,49 @@
     <style>
         :root { --p-blue: #284b99; --dark: #0f0f0f; --s-bg: #232f3e; --text: #f4f4f4; --orange: #ff9900; --nav: rgba(30, 30, 30, 0.95); }
         body { font-family: 'Segoe UI', sans-serif; background-color: var(--dark); color: var(--text); margin: 0; }
+        
         header { display: flex; align-items: center; height: 70px; background: var(--s-bg); padding: 0 40px 0 20px; border-bottom: 2px solid var(--p-blue); border-bottom-right-radius: 40px; position: fixed; top: 0; left: 0; z-index: 100; }
         .logo-box { background: white; padding: 5px; border-radius: 12px; display: flex; align-items: center; }
         .logo-box img { max-width: 45px; }
-        header h1 { margin-left: 15px; font-size: 1.2rem; letter-spacing: 2px; color: white; }
+        header h1 { margin-left: 15px; font-size: 1.2rem; letter-spacing: 2px; color: white; margin-top: 0; margin-bottom: 0; }
+
+        /* --- MENU A PILLOLA --- */
         .nav-container { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); z-index: 1000; }
-        .bottom-nav { background: var(--nav); padding: 8px; border-radius: 20px; display: flex; align-items: center; gap: 5px; border: 1px solid #444; position: relative; }
-        .nav-pill { position: absolute; background: white; border-radius: 12px; transition: all 0.4s; z-index: 0; height: 35px; width: 90px; left: 245px; }
-        .nav-item { color: #999; text-decoration: none; padding: 10px 20px; font-size: 0.85rem; font-weight: 600; position: relative; z-index: 1; }
-        .nav-item.active { color: black; }
+        .bottom-nav { 
+            background: var(--nav); 
+            padding: 8px; 
+            border-radius: 20px; 
+            display: flex; 
+            align-items: center; 
+            gap: 5px; 
+            border: 1px solid #444; 
+            position: relative; 
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+        
+        /* La pillola bianca dinamica */
+        .nav-pill { 
+            position: absolute; 
+            background: white; 
+            border-radius: 12px; 
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55); 
+            z-index: 0; 
+        }
+
+        .nav-item { 
+            color: #999; 
+            text-decoration: none; 
+            padding: 10px 20px; 
+            font-size: 0.85rem; 
+            font-weight: 600; 
+            position: relative; 
+            z-index: 1; 
+            transition: color 0.3s ease;
+        }
+        
+        .nav-item.active { color: black !important; }
+
+        /* --- CONTENUTO --- */
         main { padding: 150px 20px; max-width: 800px; margin: 0 auto; text-align: center; }
         .cart-card { background: #1e1e1e; padding: 40px; border-radius: 30px; border-top: 8px solid var(--orange); }
         .checkout-btn { background: white; color: black; border: none; padding: 15px 40px; border-radius: 50px; font-weight: bold; cursor: pointer; margin-top: 30px; }
@@ -23,13 +57,15 @@
     </style>
 </head>
 <body>
+
     <header>
         <div class="logo-box"><img src="logo.png" alt="Logo"></div>
         <h1>TECH TREND</h1>
     </header>
+
     <div class="nav-container">
-        <nav class="bottom-nav">
-            <div class="nav-pill"></div>
+        <nav class="bottom-nav" id="mainNav">
+            <div class="nav-pill" id="navPill"></div>
             <a href="index.html" class="nav-item">Home</a>
             <a href="index.html#tech-section" class="nav-item">Tech</a>
             <a href="index.html#trend-section" class="nav-item">Trend</a>
@@ -37,6 +73,7 @@
             <a href="faq.html" class="nav-item">FAQ</a>
         </nav>
     </div>
+
     <main>
         <div class="cart-card">
             <h2>IL TUO CARRELLO</h2>
@@ -45,8 +82,37 @@
             <button class="checkout-btn" onclick="window.location.href='pagamento.html'">PROCEDI AL PAGAMENTO</button>
         </div>
     </main>
+
     <footer class="site-footer">
         <p>&copy; 2026 TECH & TREND STUDIO. TUTTI I DIRITTI RISERVATI.</p>
     </footer>
+
+    <script>
+        const navPill = document.getElementById('navPill');
+        const mainNav = document.getElementById('mainNav');
+
+        function updatePill(target) {
+            if (!target) return;
+            const rect = target.getBoundingClientRect();
+            const navRect = mainNav.getBoundingClientRect();
+            
+            navPill.style.width = rect.width + 'px';
+            navPill.style.height = rect.height + 'px';
+            navPill.style.left = (rect.left - navRect.left) + 'px';
+            navPill.style.top = (rect.top - navRect.top) + 'px';
+        }
+
+        // Posiziona la pillola sulla voce attiva al caricamento
+        window.addEventListener('load', () => {
+            const activeItem = document.querySelector('.nav-item.active');
+            updatePill(activeItem);
+        });
+
+        // Aggiorna la posizione se la finestra viene ridimensionata
+        window.addEventListener('resize', () => {
+            updatePill(document.querySelector('.nav-item.active'));
+        });
+    </script>
+
 </body>
 </html>
